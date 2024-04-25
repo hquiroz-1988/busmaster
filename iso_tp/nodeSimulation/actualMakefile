@@ -1,0 +1,28 @@
+CXX = mingw32-g++
+BM_LIB = -L"C:\Program Files (x86)\BUSMASTER_v3.2.2\SimulatedSystems\OBJ" -lWrapper_CAN
+
+BM_INCLUDES = -I"C:\Program Files (x86)\BUSMASTER_v3.2.2\SimulatedSystems\Include" -I"C:\Repos\busmaster\iso_tp\nodeSimulation\includes" -I"C:\Repos\busmaster\iso_tp\nodeSimulation\src"
+
+CXXFLAGS = -Wall -c
+#$(BM_INCLUDE)
+
+dll = nodeSimulation.dll
+
+DBOBJFILE = 
+
+DBINCLUDES = 
+
+
+all: $(dll)
+
+$(dll): nodeSimulation.o
+	$(CXX) -shared -Wl,--dll  nodeSimulation.o isotp.o $(DBOBJFILE) $(BM_LIB) -o $@
+
+nodeSimulation.o: C:/Repos/BUSMAS~1/iso_tp/NODESI~2/src/nodeSimulation.cpp isotp.o
+	$(CXX) $(DBINCLUDES) $(CXXFLAGS) $(BM_INCLUDES) $< -o $@
+
+isotp.o: C:/Repos/BUSMAS~1/iso_tp/NODESI~2/src/isotp.cpp
+	$(CXX) $(DBINCLUDES) $(CXXFLAGS) $(BM_INCLUDES) $< -o $@
+
+clean: 
+	del /f nodeSimulation.o /f nodeSimulation.dll /f isotp.o 

@@ -18,3 +18,8 @@ vSetKeyPressed
 vSetGetMessageName
 vSetTimeNow
 vSetGetFirstCANdbName
+
+OnDLL_Load
+OnDLL_Unload
+OnBus_Connect
+OnBus_Disconnect

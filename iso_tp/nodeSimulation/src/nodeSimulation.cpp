@@ -11,7 +11,7 @@
 
 
 /* Start BUSMASTER global variable */
-
+Isotp isotp;
 /* End BUSMASTER global variable */
 
 
@@ -29,20 +29,21 @@ GCC_EXTERN void GCC_EXPORT OnDLL_Unload();
 /* Start BUSMASTER generated function - OnBus_Connect */
 void OnBus_Connect()
 {
-/* TODO */
+    /* pass Trace argument to print debug messages in ISOTP class   */
+    isotp.debugFunctionCallback(Trace);
 }/* End BUSMASTER generated function - OnBus_Connect */
 /* Start BUSMASTER generated function - OnBus_Disconnect */
 void OnBus_Disconnect()
 {
-/* TODO */
+    
 }/* End BUSMASTER generated function - OnBus_Disconnect */
 /* Start BUSMASTER generated function - OnDLL_Load */
 void OnDLL_Load()
 {
-/* TODO */
+
 }/* End BUSMASTER generated function - OnDLL_Load */
 /* Start BUSMASTER generated function - OnDLL_Unload */
 void OnDLL_Unload()
 {
-/* TODO */
+    
 }/* End BUSMASTER generated function - OnDLL_Unload */

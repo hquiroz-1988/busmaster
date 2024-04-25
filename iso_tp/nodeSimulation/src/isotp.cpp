@@ -45,15 +45,15 @@
  ************************************/
 eRetVal_t Isotp::debugFunctionCallback(debugFunctionPtr_t dbgFuncPtr)
 {
-    eRetVal_t eRetVal = ERROR;
+    eRetVal_t eRetVal = ERET_ERROR;
 
-    if(nullptr != dbgFuncPtr)
+    if(NULL != dbgFuncPtr)
     {
         debugPrint = dbgFuncPtr;
     }
     else
     {
-        eRetVal = NULLPOINTER_ARG;
+        eRetVal = ERET_NULLPTR;
     }
 
     return eRetVal;
@@ -61,11 +61,11 @@ eRetVal_t Isotp::debugFunctionCallback(debugFunctionPtr_t dbgFuncPtr)
 
 eRetVal_t Isotp::testPrint(void)
 {
-    eRetVal_t eRetVal = SUCCESS;
+    eRetVal_t eRetVal = ERET_SUCCESS;
 
-    if(nullptr != debugPrint)
+    if(NULL != debugPrint)
     {
-        debugPrint("Testing...", 123U);
+        debugPrint((char *)"Testing...%i", 123U);
     }
     return eRetVal;
 }

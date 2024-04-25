@@ -1,20 +1,21 @@
 /**
  ********************************************************************************
- * @file    file_name.h
+ * @file    typedefs.h
  * @author  Hugo Quiroz
  * @date    2024-04-04 18:43:30
  * @brief   description
  ********************************************************************************
  */
 
-#ifndef FILE_NAME_H
-#define FILE_NAME_H
+#ifndef TYPEDEFS_H
+#define TYPEDEFS_H
 
 /************************************
  * INCLUDES
  ************************************/
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,13 +31,13 @@ extern "C" {
 
 typedef enum
 {
-    SUCCESS,
-    NULLPOINTER_ARG,
-    ERROR,
+    ERET_SUCCESS,
+    ERET_NULLPTR,
+    ERET_ERROR,
 
 }eRetVal_t;
 
-typedef uint32_t (*debugFunctionPtr_t)(const char *format, ...);
+typedef uint32_t (*debugFunctionPtr_t)(char *format, ...);
 
 /************************************
  * EXPORTED VARIABLES
@@ -51,4 +52,4 @@ typedef uint32_t (*debugFunctionPtr_t)(const char *format, ...);
 }
 #endif
 
-#endif //FILE_NAME_H
+#endif //TYPEDEFS_H

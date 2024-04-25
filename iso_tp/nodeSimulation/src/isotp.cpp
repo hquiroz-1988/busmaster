@@ -69,3 +69,10 @@ eRetVal_t Isotp::testPrint(void)
     }
     return eRetVal;
 }
+
+eRetVal_t Isotp::stateMachineRun(void)
+{
+    eRetVal_t eRetVal = ERET_SUCCESS;
+
+    return eRetVal;
+}

@@ -35,6 +35,8 @@ class Isotp
 
     eRetVal_t testPrint(void);
 
+    eRetVal_t stateMachineRun(void);
+
     private:
 
     debugFunctionPtr_t debugPrint;

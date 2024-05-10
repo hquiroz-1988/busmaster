@@ -9,7 +9,9 @@
     2. [TDM-GCC](#bullet2-subBullet2)
     3. [Make](#bullet2-subBullet3)
 3. [Implementation Details](#bullet3)
-    1. [Sub-Bullet Point](#bullet3-subBullet1)
+    1. [Block Diagram](#bullet3-subBullet1)
+    2. [ISOTP State Machine](#bullet3-subBullet2)
+    3. [UDS State Machine](#bullet3-subBullet3)
 
 ## Introduction <a name="bullet1"></a>
 This project is a UDS and ISOTP implementation to be used with Busmaster for vehicle debugging and diagnostics. This readme only documents installation for 64-bit Windows 10 host computer.

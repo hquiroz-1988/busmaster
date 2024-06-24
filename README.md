@@ -20,7 +20,7 @@ This project is a UDS and ISOTP implementation to be used with Busmaster for veh
 The following pre-requisites are required to be able to compile and use the tool.
 
 ### Busmaster <a name="bullet2-subBullet1"></a>
-This is a sub paragraph, formatted in heading 3 style
+Busmaster can be downloaded from the following link.
 
 https://rbei-etas.github.io/busmaster/
 
@@ -31,7 +31,12 @@ TDM-GCC 4.8.1 can be dowloaded from the sourceforge link below. It is critical t
 https://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%20Installer/Previous/1.1309.0/tdm-gcc-4.8.1.exe/download
 
 ### Make <a name="bullet2-subBullet3"></a>
-download and install make using the following instructions
+Download and install make using either GNU32 website or MSYS.
+
+https://gnuwin32.sourceforge.net/packages/make.htm
+
+https://www.msys2.org/
+
 
 ## Implementation Details <a name="bullet3"></a>
 

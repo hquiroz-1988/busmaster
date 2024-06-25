@@ -42,21 +42,6 @@
  * STATIC FUNCTIONS
  ************************************/
 
-void Isotp::update_stateVars(void)
-{
-    prevState = currState;
-    if(ISOTPSM_NO_STATE != nextState)
-    {
-        currState = nextState;
-        nextState = ISOTPSM_NO_STATE;
-    }
-}
-
-void Isotp::request_nextState(isotpSMStates_t reqState)
-{
-    nextState = reqState;
-}
-
 void Isotp::run_idleState(void)
 {
     /* implement run function */
@@ -118,6 +103,11 @@ bool Isotp::transition_sendCFToDelayCF(void)
 /************************************
  * GLOBAL FUNCTIONS
  ************************************/
+Isotp::Isotp()
+{
+
+}
+
 eRetVal_t Isotp::debugFunctionCallback(debugFunctionPtr_t dbgFuncPtr)
 {
     eRetVal_t eRetVal = ERET_ERROR;
@@ -145,78 +135,11 @@ eRetVal_t Isotp::testPrint(void)
     return eRetVal;
 }
 
-eRetVal_t Isotp::stateMachineRun(void)
+eRetVal_t Isotp::run(void)
 {
     eRetVal_t eRetVal = ERET_SUCCESS;
 
-    
-    switch(currState)
-    {
-        case ISOTPSM_IDLE_STATE:
-        {
-            if(ENTERING_STATE())
-            {
-                /* first time setup for this state */
-            }
-
-            /* run function*/
-            run_idleState();
-            
-
-            /* check for transitions  */
-            if(transition_idleToProcessMsg())
-            {
-                request_nextState(ISOTPSM_PROCESS_DATA_STATE);
-            }
-            else if(transition_idleToProcessData())
-            {
-                request_nextState(ISOTPSM_PROCESS_DATA_STATE);
-            }
-            else
-            {
-                /* do nothing, possibly clear the req state if not one of the above states */
-            }
-
-
-            if(EXITING_STATE())
-            {
-                /* last minute wrap up with this state   */
-            }
-            break;
-        }
-        case ISOTPSM_PROCESS_DATA_STATE:
-        {
-            break;
-        }
-        case ISOTPSM_SEND_SF_STATE:
-        {
-            break;
-        }
-        case ISOTPSM_SEND_FF_STATE:
-        {
-            break;
-        }
-        case ISOTPSM_WAIT_FOR_FC_STATE:
-        {
-            break;
-        }
-        case ISOTPSM_SEND_CF_STATE:
-        {
-            break;
-        }
-        case ISOTPSM_DELAY_CF_STATE:
-        {
-            break;
-        }
-        case ISOTPSM_PROCESS_MSG_STATE:
-        {
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
+    update_stateVars();
 
     return eRetVal;
 }

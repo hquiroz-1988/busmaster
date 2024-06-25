@@ -26,7 +26,7 @@ extern "C" {
 /************************************
  * TYPEDEFS
  ************************************/
-typedef eRetVal_t (*stateFunctionPtr)(void);
+typedef eRetVal_t (*stateFunctionPtr[])(void);
 
 class StateMachine
 {
@@ -40,6 +40,17 @@ class StateMachine
 
     debugFunctionPtr_t debugPrint = nullptr;
     stateFunctionPtr * funcArrayPtr  = nullptr;
+
+    uint8_t noState;
+    uint8_t prevState; 
+    uint8_t currState; 
+    uint8_t reqState; 
+
+    void update_stateVars(void);
+    void request_reqState(uint8_t state);
+
+    /* friend class state */
+    friend class State;
     
 };
 

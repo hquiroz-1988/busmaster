@@ -52,9 +52,10 @@ typedef enum
 class Isotp : public StateMachine
 {
     public:
+    Isotp();
     eRetVal_t debugFunctionCallback(debugFunctionPtr_t dbgFuncPtr);
     eRetVal_t testPrint(void);
-    eRetVal_t stateMachineRun(void);
+    eRetVal_t run(void);
 
     private:
     debugFunctionPtr_t debugPrint;

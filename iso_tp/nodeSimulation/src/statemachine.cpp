@@ -11,6 +11,7 @@
  * INCLUDES
  ************************************/
 #include "statemachine.h"
+#include "state.h"
 
 /************************************
  * EXTERN VARIABLES
@@ -19,8 +20,6 @@
 /************************************
  * PRIVATE MACROS AND DEFINES
  ************************************/
-#define ENTERING_STATE()    (currState != prevState)
-#define EXITING_STATE()      (currState != nextState)
 
 /************************************
  * PRIVATE TYPEDEFS
@@ -41,7 +40,20 @@
 /************************************
  * STATIC FUNCTIONS
  ************************************/
+void StateMachine::update_stateVars(void)
+{
+    prevState = currState;
+    if(noState != reqState)
+    {
+        currState = reqState;
+        reqState = noState;
+    }
+}
 
+void StateMachine::request_reqState(uint8_t state)
+{
+    reqState = state;
+}
 
 
 /************************************
@@ -52,37 +64,21 @@ StateMachine::StateMachine(void)
 {
     
 }
-eRetVal_t StateMachine::debugFunctionCallback(debugFunctionPtr_t dbgFuncPtr)
-{
-    eRetVal_t eRetVal = ERET_ERROR;
-
-    if(NULL != dbgFuncPtr)
-    {
-        debugPrint = dbgFuncPtr;
-    }
-    else
-    {
-        eRetVal = ERET_NULLPTR;
-    }
-
-    return eRetVal;
-}
-
-eRetVal_t StateMachine::testPrint(void)
-{
-    eRetVal_t eRetVal = ERET_SUCCESS;
-
-    if(NULL != debugPrint)
-    {
-        debugPrint((char *)"Testing...%i", 123U);
-    }
-    return eRetVal;
-}
 
 eRetVal_t StateMachine::run(void)
 {
     eRetVal_t eRetVal = ERET_SUCCESS;
 
+    /* update sm state   */
+    update_stateVars();
+
+    if(nullptr != funcArrayPtr)
+    {
+        if(nullptr != (*funcArrayPtr)[currState])
+        {
+            (*funcArrayPtr)[currState]();
+        }
+    }
 
     return eRetVal;
 }

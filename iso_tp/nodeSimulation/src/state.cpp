@@ -1,6 +1,6 @@
 /**
  ********************************************************************************
- * @file    statemachine.cpp
+ * @file    state.cpp
  * @author  Hugo Quiroz
  * @date    2024-04-04 18:11:35
  * @brief   description
@@ -10,7 +10,7 @@
 /************************************
  * INCLUDES
  ************************************/
-#include "statemachine.h"
+#include "state.h"
 
 /************************************
  * EXTERN VARIABLES
@@ -19,12 +19,14 @@
 /************************************
  * PRIVATE MACROS AND DEFINES
  ************************************/
-#define ENTERING_STATE()    (currState != prevState)
-#define EXITING_STATE()      (currState != nextState)
+
 
 /************************************
  * PRIVATE TYPEDEFS
  ************************************/
+
+#define ENTERING_STATE()    (smObj.currState != smObj.prevState)
+#define EXITING_STATE()      (smObj.currState != smObj.reqState)
 
 /************************************
  * STATIC VARIABLES
@@ -42,183 +44,45 @@
  * STATIC FUNCTIONS
  ************************************/
 
-void StateMachine::update_stateVars(void)
+void State::enterFunction(void)
 {
-    prevState = currState;
-    if(STATEMACHINESM_NO_STATE != nextState)
-    {
-        currState = nextState;
-        nextState = STATEMACHINESM_NO_STATE;
-    }
+    /* do nothing    */
 }
-
-void StateMachine::request_nextState(statemachineSMStates_t reqState)
+void State::runFunction(void)
 {
-    nextState = reqState;
+    /* do nothing    */
 }
-
-void StateMachine::run_idleState(void)
+void State::gateFunction(void)
 {
-    /* implement run function */
+    /* do nothing    */
 }
-
-bool StateMachine::transition_idleToProcessMsg(void)
+void State::exitFunction()
 {
-    /* check conditions for transitioning    */
-    bool retVal = false;
-
-    // /* conditions for transitioning are receiving data from CAN module   */
-    // if(get_canMessageFlag())
-    // {
-    //     retVal = true;
-    // }
-
-    return retVal;
-}
-
-bool StateMachine::transition_idleToProcessData(void)
-{
-    /* check conditions for transitioning    */
-    bool retVal = false;
-
-    // /* conditions for transitioning are receiving data from UDS module   */
-    // if(get_udsMessageFlag())
-    // {
-    //     retVal = true;
-    // }
-
-    return retVal;
-}
-
-bool StateMachine::transition_processDataToSendSF(void)
-{
-    /* check conditions for transitioning    */
-}
-
-bool StateMachine::transition_processDataToSendFF(void)
-{
-    /* check conditions for transitioning    */
-}
-
-bool StateMachine::transition_sendFFToWaitFC(void)
-{
-    /* check conditions for transitioning    */
-}
-
-bool StateMachine::transition_waitFCToSendCF(void)
-{
-    /* check conditions for transitioning    */
-}
-
-bool StateMachine::transition_sendCFToDelayCF(void)
-{
-    /* check conditions for transitioning    */
+    /* do nothing    */
 }
 
 /************************************
  * GLOBAL FUNCTIONS
  ************************************/
-eRetVal_t StateMachine::debugFunctionCallback(debugFunctionPtr_t dbgFuncPtr)
+
+
+void State::run(void)
 {
-    eRetVal_t eRetVal = ERET_ERROR;
 
-    if(NULL != dbgFuncPtr)
+    /* function for first time init */
+    if(ENTERING_STATE())
     {
-        debugPrint = dbgFuncPtr;
+        enterFunction();
     }
-    else
-    {
-        eRetVal = ERET_NULLPTR;
-    }
-
-    return eRetVal;
-}
-
-eRetVal_t StateMachine::testPrint(void)
-{
-    eRetVal_t eRetVal = ERET_SUCCESS;
-
-    if(NULL != debugPrint)
-    {
-        debugPrint((char *)"Testing...%i", 123U);
-    }
-    return eRetVal;
-}
-
-eRetVal_t StateMachine::stateMachineRun(void)
-{
-    eRetVal_t eRetVal = ERET_SUCCESS;
-
     
-    switch(currState)
+    runFunction();
+
+    gateFunction();
+    
+    if(EXITING_STATE())
     {
-        case STATEMACHINESM_IDLE_STATE:
-        {
-            if(ENTERING_STATE())
-            {
-                /* first time setup for this state */
-            }
-
-            /* run function*/
-            run_idleState();
-            
-
-            /* check for transitions  */
-            if(transition_idleToProcessMsg())
-            {
-                request_nextState(STATEMACHINESM_PROCESS_DATA_STATE);
-            }
-            else if(transition_idleToProcessData())
-            {
-                request_nextState(STATEMACHINESM_PROCESS_DATA_STATE);
-            }
-            else
-            {
-                /* do nothing, possibly clear the req state if not one of the above states */
-            }
-
-
-            if(EXITING_STATE())
-            {
-                /* last minute wrap up with this state   */
-            }
-            break;
-        }
-        case STATEMACHINESM_PROCESS_DATA_STATE:
-        {
-            break;
-        }
-        case STATEMACHINESM_SEND_SF_STATE:
-        {
-            break;
-        }
-        case STATEMACHINESM_SEND_FF_STATE:
-        {
-            break;
-        }
-        case STATEMACHINESM_WAIT_FOR_FC_STATE:
-        {
-            break;
-        }
-        case STATEMACHINESM_SEND_CF_STATE:
-        {
-            break;
-        }
-        case STATEMACHINESM_DELAY_CF_STATE:
-        {
-            break;
-        }
-        case STATEMACHINESM_PROCESS_MSG_STATE:
-        {
-            break;
-        }
-        default:
-        {
-            break;
-        }
+        exitFunction();
     }
-
-    return eRetVal;
 }
 
 
